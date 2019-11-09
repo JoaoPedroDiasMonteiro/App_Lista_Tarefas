@@ -5,6 +5,7 @@ require '../../app_lista_tarefas/tarefa.service.php';
 require '../../app_lista_tarefas/conexao.php';
 
 $acao = isset($_GET['acao'])? $_GET['acao']: $acao;
+$pag = isset($_GET['pag'])? $_GET['pag']: '';
 
 if ($acao == 'inserir') {
     $tarefa = new Tarefa();
@@ -33,7 +34,7 @@ if ($acao == 'inserir') {
 
     $tarefaService = new TarefaService($conexao, $tarefa);
     if ($tarefaService->atualizar()) {
-        header('Location: todas_tarefas.php');
+        $pag == 'index'? header('Location: index.php'):header('Location: todas_tarefas.php');
     }
 
 } else if ($acao == 'remover') {
@@ -43,7 +44,7 @@ if ($acao == 'inserir') {
     $tarefaService = new TarefaService($conexao, $tarefa);
     $tarefaService->remover();
 
-    header('Location: todas_tarefas.php');
+    $pag == 'index'? header('Location: index.php'):header('Location: todas_tarefas.php');
 
 } else if ($acao = 'marcarRealizada') {
     $tarefa = new Tarefa;
@@ -55,9 +56,6 @@ if ($acao == 'inserir') {
     $tarefaService = new TarefaService($conexao, $tarefa);
     $tarefaService->marcarRealizada(); 
 
-    header('Location: todas_tarefas.php');
+    $pag == 'index'? header('Location: index.php'):header('Location: todas_tarefas.php');
 
 }
-
-
-?>
